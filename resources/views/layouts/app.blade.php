@@ -20,11 +20,16 @@
     <link href="{{ asset('css/app.css') }}" rel="stylesheet">
 </head>
 <body>
-    <div id="app">
-        @include('layouts.modules.navbar')
-        <main class="py-4">
-            @yield('content')
-        </main>
-    </div>
+<div id="app">
+    @include('layouts.modules.navbar')
+    @if(!isset($breadcrumbs))
+        @include('layouts.modules.breadcrumbs')
+    @endif
+
+    @include('layouts.modules.flashes')
+    <main class="{{$sectionContent ?? true ? 'py-4 container' : '' }}">
+        @yield('content')
+    </main>
+</div>
 </body>
 </html>
