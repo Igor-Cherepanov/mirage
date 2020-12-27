@@ -51,7 +51,7 @@
                     # {{$monument->getKey()}}
                 </div>
                 <div class="col-9">
-                    <a class="text-primary" href="{{route('monuments.edit', $monument)}}">
+                    <a class="text-primary" href="{{route('monuments.show', $monument)}}">
                         {{$monument->getName()}}
                     </a>
                 </div>
