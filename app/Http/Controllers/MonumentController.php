@@ -60,7 +60,7 @@ class MonumentController extends Controller
 
         /** @var MonumentPicture $monument */
         $monument = $this->monuments->create($frd);
-
+//
         foreach ($frd['slides'] ?? [] as $images) {
             foreach ($images as $image) {
                 $uploadFile = $image['file'] ?? null;
