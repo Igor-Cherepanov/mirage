@@ -75,20 +75,21 @@ class MonumentController extends Controller
             }
         }
 
-        $flashMessages = [['type' => 'success', 'text' => 'Валюта «' . $monument->getName() . '» сохранена']];
+        $flashMessages = [['type' => 'success', 'text' => 'Достопримечательность «' . $monument->getName() . '» сохранена']];
 
         return redirect()->route('monuments.edit', $monument)->with(compact('flashMessages'));
     }
 
     /**
      * @param Request $request
+     * @param Monument $monument
      * @return \Illuminate\Contracts\Foundation\Application|\Illuminate\Contracts\View\Factory|\Illuminate\Contracts\View\View
      */
-    public function show(Request $request)
+    public function show(Request $request, Monument $monument)
     {
         $frd = $request->all();
 
-        return view('monuments.store', compact('frd'));
+        return view('monuments.show', compact('frd', 'monument'));
     }
 
     /**
