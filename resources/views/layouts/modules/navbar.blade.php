@@ -1,7 +1,6 @@
 <nav class="navbar navbar-expand-md navbar-light shadow-sm" style="background-color: #b3e8ca">
     <div class="container">
         <a class="navbar-brand" href="{{ url('/') }}">
-{{--            Практика по БД )--}}
             {{ config('app.name', 'Laravel') }}
         </a>
         <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="{{ __('Toggle navigation') }}">
@@ -12,20 +11,17 @@
             <!-- Left Side Of Navbar -->
             <ul class="navbar-nav mr-auto">
                 <li class="nav-item dropdown">
-                    <div class="nav-item btn mt-0 dropdown-toggle text-black-50" type="button" id="dropdownMenuButton"
-                         data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                        Справочники
-                    </div>
-                    <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-                        <a class="dropdown-item" href="{{route('currencies.index')}}">Валюты</a>
-                        <a class="dropdown-item" href="{{route('cities.index')}}">Города</a>
-                        <a class="dropdown-item" href="{{route('banks.index')}}">Банки</a>
-                        <a class="dropdown-item" href="{{route('exchange-offices.index')}}">Пункты обмена валют</a>
-                    </div>
+{{--                    <div class="nav-item btn mt-0 dropdown-toggle text-black-50" type="button" id="dropdownMenuButton"--}}
+{{--                         data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">--}}
+{{--                        Справочники--}}
+{{--                    </div>--}}
+{{--                    <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">--}}
+{{--                        <a class="dropdown-item" href="{{route('monuments.index')}}">Достопримечательности</a>--}}
+{{--                    </div>--}}
+                    <a class="nav-item btn mt-0 text-black-50" href="{{route('monuments.index')}}">Достопримечательности</a>
+{{--                    <a class="dropdown-item" href="{{route('monuments.index')}}">Достопримечательности</a>--}}
                     @if (auth()->check())
-                        <a class="nav-item btn mt-0 text-black-50" href="{{route('users.currency-balances.index', auth()->user())}}">Счета</a>
-                        <a class="nav-item btn mt-0 text-black-50" href="{{route('ex-cur.select-action')}}">Обменять валюту</a>
-
+{{--                        <a class="nav-item btn mt-0 text-black-50" href="{{route('users.currency-balances.index', auth()->user())}}">Счета</a>--}}
                     @endif
 
                 </li>
