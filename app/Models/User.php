@@ -66,4 +66,54 @@ class User extends Authenticatable
     protected $casts = [
         'email_verified_at' => 'datetime',
     ];
+
+    /**
+     * @return string
+     */
+    public function getName(): string
+    {
+        return $this->name;
+    }
+
+    /**
+     * @param string $name
+     */
+    public function setName(string $name): void
+    {
+        $this->name = $name;
+    }
+
+    /**
+     * @return string
+     */
+    public function getEmail(): string
+    {
+        return $this->email;
+    }
+
+    /**
+     * @param string $email
+     */
+    public function setEmail(string $email): void
+    {
+        $this->email = $email;
+    }
+
+    /**
+     * @return string|null
+     */
+    public function getRememberToken(): ?string
+    {
+        return $this->remember_token;
+    }
+
+    /**
+     * @return \Illuminate\Support\Carbon|null
+     */
+    public function getCreatedAt(): ?\Illuminate\Support\Carbon
+    {
+        return $this->created_at;
+    }
+
+
 }
