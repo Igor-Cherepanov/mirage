@@ -39,6 +39,7 @@
     'label' => 'Изображение',
     'slideId'=>0,
     'id'=>$i,
+    'gallery'=>$gallery ?? null,
 ])
 @endfor
 

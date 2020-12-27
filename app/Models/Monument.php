@@ -3,8 +3,11 @@
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Builder;
+use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 use Te7aHoudini\LaravelTrix\Traits\HasTrixRichText;
 
 /**
@@ -143,4 +146,19 @@ class Monument extends Model
 
         return $query;
     }
+
+    /**
+     * @return BelongsToMany
+     */
+    public function monumentPictures():BelongsToMany{
+        return $this->belongsToMany(MonumentPicture::class, 'monuments_monument_pictures');
+    }
+
+    /**
+     * @return Collection
+     */
+    public function getMonumentPictures():Collection{
+        return $this->monumentPictures()->get();
+    }
+
 }

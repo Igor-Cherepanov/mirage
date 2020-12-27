@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Monument;
+use App\Models\MonumentPicture;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
@@ -57,22 +58,22 @@ class MonumentController extends Controller
         $frd['description'] = $frd['monument-trixFields']['description'] ?? '';
         $storageReceptionClient = Storage::disk('reception');
 
+        /** @var MonumentPicture $monument */
         $monument = $this->monuments->create($frd);
 
-        foreach ($frd['slides']??[] as $images){
-            foreach ($images as $image){
+        foreach ($frd['slides'] ?? [] as $images) {
+            foreach ($images as $image) {
                 $uploadFile = $image['file'] ?? null;
                 if ($uploadFile !== null) {
                     $fileOriginalName = $uploadFile->getClientOriginalName();
-                    $filePath = $monument->getKey().'/'.$image['ordering'].$fileOriginalName;
+                    $filePath = $monument->getKey() . '/' . $image['ordering'] . $fileOriginalName;
                     $storageReceptionClient->put($filePath, $uploadFile->getContent());
+                    $monument->monumentPictures()->create([
+                        'path' => $filePath,
+                    ]);
                 }
             }
         }
-
-//        dd($frd, storage_path('reception'));
-
-//        dd($monument);
 
         $flashMessages = [['type' => 'success', 'text' => 'Валюта «' . $monument->getName() . '» сохранена']];
 
@@ -98,8 +99,9 @@ class MonumentController extends Controller
     public function edit(Request $request, Monument $monument)
     {
         $frd = $request->all();
+        $gallery = $monument->getMonumentPictures()->toArray();
 
-        return view('monuments.edit', compact('frd', 'monument'));
+        return view('monuments.edit', compact('frd', 'monument', 'gallery'));
     }
 
     /**
@@ -110,12 +112,27 @@ class MonumentController extends Controller
     public function update(Request $request, Monument $monument)
     {
         $frd = $request->all();
+
         $frd['description'] = $frd['monument-trixFields']['description'] ?? '';
-        $monument->update($frd);
+        $storageReceptionClient = Storage::disk('reception');
+
+        foreach ($frd['slides'] ?? [] as $images) {
+            foreach ($images as $image) {
+                $uploadFile = $image['file'] ?? null;
+                if ($uploadFile !== null) {
+                    $fileOriginalName = $uploadFile->getClientOriginalName();
+                    $filePath = $monument->getKey() . '/' . $image['ordering'] . $fileOriginalName;
+                    $storageReceptionClient->put($filePath, $uploadFile->getContent());
+                    $monument->monumentPictures()->create([
+                        'path' => $filePath,
+                    ]);
+                }
+            }
+        }
 
         $flashMessages = [['type' => 'success', 'text' => 'Валюта «' . $monument->getName() . '» сохранена']];
 
-        return redirect()->back()->with(compact('flashMessages', 'monument', 'frd'));
+        return redirect()->back();
     }
 
     /**

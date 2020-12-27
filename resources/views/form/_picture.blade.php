@@ -6,28 +6,15 @@
         ?>
         <div class="col-lg-8">
             <div style="max-width: 720px">
-                @if (isset($element))
-                    <img srcset="{{ $element->getSrcset() }}"
-                         data-picture-id="{{ $element->getKey() }}"
-                         width="{{ $element->getWidth() }}"
-                         height="{{ $element->getHeight() }}" class="img-fluid rounded">
-                    <?php
-                    /**
-                     * @var \App\Models\Storage\Image $image
-                     */
-                    $images = $element->getImages();
-                    ?>
-                    <div class="row">
-                        @foreach($images as $image)
-                            <div class="col text-center">
-                                <a href="{{ $image->getPublicPath() }}"
-                                   target="_blank">{{ $image->getWidth() }}x{{ $image->getHeight() }}
-                                    px {{ $image->getSizeFormatted() }}
-                                </a>
-                            </div>
-                        @endforeach
-                    </div>
-
+                <?php
+                $storageReceptionClient = \Illuminate\Support\Facades\Storage::disk('reception');
+                $filePath = $gallery[$id] ?? null;
+                if (null !== $filePath) {
+                    $file = asset('images/'.$filePath['path']);
+                }
+                ?>
+                @if (isset($file))
+                    <img src="{{ $file ?? '' }}" class="img-fluid rounded">
                 @endif
 
             </div>
