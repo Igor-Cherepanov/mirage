@@ -60,7 +60,7 @@ class MonumentController extends Controller
 
         /** @var MonumentPicture $monument */
         $monument = $this->monuments->create($frd);
-//
+
         foreach ($frd['slides'] ?? [] as $images) {
             foreach ($images as $image) {
                 $uploadFile = $image['file'] ?? null;
@@ -115,6 +115,8 @@ class MonumentController extends Controller
 
         $frd['description'] = $frd['monument-trixFields']['description'] ?? '';
         $storageReceptionClient = Storage::disk('reception');
+
+        $monument->update($frd);
 
         foreach ($frd['slides'] ?? [] as $images) {
             foreach ($images as $image) {
